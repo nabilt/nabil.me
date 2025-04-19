@@ -1,0 +1,71 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Milling 0.2mm (7.9mil) Traces with a Desktop CNC</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>Milling 0.2mm (7.9mil) Traces with a Desktop CNC</h2>
+  <p>
+    <small>August 30, 2023</small>
+      
+  </p>
+  <div>
+    <p><img alt="pxl_20230830_151049798" src="https://storage.googleapis.com/nabil_me_bucket/img/pxl_20230830_151049798.jpg" /></p>
+<p>I recently needed a breakout board for a 2 x 2 mm STDFN chip, but wasn't able to find one online. I decided to see if my 3020 desktop CNC mill was up to the task. The trace widths going into the chip are 0.2mm. The spacing between the pads are also about 0.2mm.</p>
+<p><img alt="pxl_20230830_151134918" src="https://storage.googleapis.com/nabil_me_bucket/img/pxl_20230830_151134918.jpg" /></p>
+<p>The smallest bit I have is a 0.1mm engraving bit so there isn't much room for error.</p>
+<p><img alt="image-3" src="https://storage.googleapis.com/nabil_me_bucket/img/image-3.png" /></p>
+<p>I generated my G-code using Flatcam. I used 4 passes with a 45% overlap to provide good isolation between tracks. Here is a good <a href="https://www.youtube.com/watch?v=--Cb11heuHc">tutorial</a> on the entire process.</p>
+<p><img alt="image-2" src="https://storage.googleapis.com/nabil_me_bucket/img/image-2.png" /></p>
+<p>The next step is to generate a height map in my CAM software Candle. The goal here is to correct for unevenness of the copper surface. This is a critical step to get tight tolerances. I'm using a 5x5 grid with 10x10 interpolation grid. Here are a few more tips:</p>
+<ul>
+<li>Secure your copper board as flat as possible to the CNC bed using tape and super glue.</li>
+<li>Don't put pressure on the board with the Z probe when doing height mapping if you are holding it with your hand. Depressing the board will change the height of the offsets.</li>
+</ul>
+<p>That's it. The traces are very delicate so I wouldn't want to do a large board like this, but it's good for small prototypes.</p>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

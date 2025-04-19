@@ -1,0 +1,118 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>DIY Reflow Oven w/ Exhaust Build - Part 1</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>DIY Reflow Oven w/ Exhaust Build - Part 1</h2>
+  <p>
+    <small>December 1, 2020</small>
+      
+        <a href="/blog/tag/tools/"
+           class="tag-badge tag-neutral">
+          #tools
+        </a>
+      
+  </p>
+  <div>
+    <figure class="video">
+  <iframe width="560" height="315"
+          src="https://www.youtube.com/embed/76vT7wgIDM8"
+          title="YouTube video player"
+          frameborder="0"
+          allow=""
+          allowfullscreen>
+  </iframe>
+</figure>
+
+<p>Yet another toaster oven build. I know...</p>
+<p>There is a lot of debate if a DIY reflow oven even needs a PID controller. The argument goes, either spend the money and buy a professional machine for a few thousand or build your own and just eyeball the temperature with a manual on/off switch. Anything in between isn't worth it because of the large temperature variations due to the nature of the heating elements, etc, etc. There is probably some truth to this, but who doesn't love over engineering workshop tools?</p>
+<p>Side note: This post isn't meant to be a guide (<strong>read: I am not responsible if you burn your house down</strong>). I suggest purchasing a kit from <a href="https://www.whizoo.com/reflowoven">whizoo</a> or someone similar because this probably isn't worth the time investment.</p>
+<p>There are two problems I was hoping the addition of an exhaust fan would solve:</p>
+<ol>
+<li><strong>PID tuning difficulties</strong>: The internal temperature of an oven is difficult to control if there is no way to remove heat due to thermal inertia. It takes a few seconds for the temperature to increase after the heating elements turn on and many seconds to stop increasing after they turn off. This makes tuning difficult and usually requires hard coding difficult parts of the reflow process.</li>
+<li><strong>Rapid cooling</strong>: Most reflow profiles require rapid cooling after reaching maximum temperature (see below), which isn't possible without some way of removing heat. Opening the oven door is one workaround that is probably good enough for most people, but an automated solution would be nice.</li>
+</ol>
+<p><img alt="image.png" src="https://storage.googleapis.com/nabil_me_bucket/img/image.png" /></p>
+<h2>Hardware</h2>
+<p>I bought a broken Breville BOV450XL because it has 4 heated quartz heaters.</p>
+<p><img alt="pdp0.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/pdp0.jpg" /></p>
+<p>After disassembling the oven, I cut out the bulge in the back to make room for the exhaust.</p>
+<p><img alt="re_pxl_20201018_232503644.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201018_232503644.jpg" /></p>
+<p>Added some JB Weld to attach some sheet metal. I should have cut a hole in the back before I did this.</p>
+<p><img alt="re_pxl_20201018_233226871.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201018_233226871.jpg" /><br />
+<img alt="re_pxl_20201018_233315692.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201018_233315692.jpg" /><br />
+<img alt="re_pxl_20201024_220835536.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201024_220835536.jpg" /></p>
+<p>Attached a 4 inch duct with a stepper motor to control the air damper. The air isn't that hot when it reaches the PC fan so I'm hoping it holds up. I've also attached some insulation to the air damper to keep in as much heat when it's closed.</p>
+<p><img alt="re_pxl_20201024_220853377-1.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201024_220853377-1.jpg" /></p>
+<p><img alt="re_pxl_20201024_222508746-2.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201024_222508746-2.jpg" /></p>
+<p><img alt="re_pxl_20201027_221122357.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201027_221122357.jpg" /></p>
+<p><img alt="re_pxl_20201124_170057502.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201124_170057502.jpg" /></p>
+<p>I used DEI Floor &amp; Tunnel Shield to insulate the inside as whizoo has suggested in their build guide. I opted for the non-adhesive version because I didn't like the idea of glue inside of the oven even if it's temperature rated. The outside of the oven was painted with some leftover high temperature paint I had and insulated with a ceramic fiber blanket.</p>
+<p><img alt="re_pxl_20201027_155102675.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201027_155102675.jpg" /></p>
+<p><img alt="re_pxl_20201027_161258752.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201027_161258752.jpg" /></p>
+<p><img alt="re_pxl_20201027_200550396.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201027_200550396.jpg" /></p>
+<p>I cut a section in the control panel to make room for an Adafruit 2.8 inch LCD. The bottom two holes were filled in with old automotive fiberglass filler I had. The controller is a Raspberry Pi Zero W. A motor driver and solid-state relay control the fan and heating elements. They are monitored by a temperature sensor to make sure they don't get too hot.</p>
+<p><img alt="re_pxl_20201020_231646865-2.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201020_231646865-2.jpg" /></p>
+<p><img alt="re_pxl_20201108_190633279-2.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201108_190633279-2.jpg" /></p>
+<p>The mostly finished product can be seen in the video linked in the post.</p>
+<h2>Software</h2>
+<p>The software is very basic so far. It allows manual control of the oven for testing purposes and displays the temperature on a graph with the current reflow profile. It was more difficult to cross-compile Qt than it was to build the application.</p>
+<p>Surprisingly, I was able to get away with only using proportional control with the addition of the exhaust fan!</p>
+<p><img alt="page1.png" src="https://storage.googleapis.com/nabil_me_bucket/img/page1.png" /></p>
+<p><img alt="page2.png" src="https://storage.googleapis.com/nabil_me_bucket/img/page2.png" /></p>
+<p><img alt="page3.png" src="https://storage.googleapis.com/nabil_me_bucket/img/page3.png" /></p>
+<h2>First test</h2>
+<p>The first test was a success. I was able to solder a couple of fine pitch components like the BMP280 and the SGP40 for another home automation project I'm working on. This board will track home water usage, water leaks and air quality. More details on that soon.</p>
+<p><img alt="re_pxl_20201127_225716729.jpg" src="https://storage.googleapis.com/nabil_me_bucket/img/re_pxl_20201127_225716729.jpg" /></p>
+<h2>Future Improvements</h2>
+<ol>
+<li>The oven is so air tight, I still need to open the door a bit to move enough air through the exhaust during the final cooling phase. Maybe I should add some kind of air intake valve.</li>
+<li>The PID controller needs to be tuned a bit more to reduce overshoot so the fan doesn't come on so much.</li>
+</ol>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

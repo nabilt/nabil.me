@@ -1,0 +1,106 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Open source Bluetooth 4 breakout board means no more Mi-Fi</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>Open source Bluetooth 4 breakout board means no more Mi-Fi</h2>
+  <p>
+    <small>April 9, 2012</small>
+      
+        <a href="/blog/tag/electronics/"
+           class="tag-badge tag-neutral">
+          #electronics
+        </a>
+      
+  </p>
+  <div>
+    <p><img alt="nRF8001 Breakout board schematic" src="https://storage.googleapis.com/nabil_me_bucket/img/1b72b-bluetooth_brd.jpg" /></p>
+<p>Update: Project is posted on <a href="https://github.com/nabilt/nRF8001-Breakout-Board">GitHub</a></p>
+<p>One thing I always need for my hardware projects — whether I'm working on <a href="http://www.nabiltewolde.com/2011/11/home-energy-prototypes.html">sensors for the home</a> or a <a href="http://www.nabiltewolde.com/2011/11/bike-computer-v01-build.html">fitness device</a> — is a low power, cross-platform, and affordable wireless module. I've used HopeRF modules like the <a href="http://www.hoperf.com/rf_fsk/fsk/RFM22B.htm">RFM22B</a> for their affordability and low power capabilities, but because they don't use any standard wireless protocol, I'm forced to make adapters for endpoints like smartphones or computers.</p>
+<p>Wireless standards like ZigBee partially solve this problem, but off-the-shelf modules are expensive and still don't help if you want to talk to a smartphone. One might think Bluetooth is the solution then, but in the past, power efficiency and range were a problem if you were building a temperature sensor, for example. Also, you had to be a certified Apple accessory developer if you wanted to make a Bluetooth accessory for the most popular smartphone in the market. Well, all of this has changed with Bluetooth 4.</p>
+<p>Bluetooth 4 Low Energy is the latest incarnation of the Bluetooth standard, which most devices released this year will adopt. Bluetooth.com says:</p>
+<p><strong>Key features of Bluetooth Low Energy wireless technology include:</strong></p>
+<ul>
+<li>Ultra-low peak, average, and idle mode power consumption  </li>
+<li>Ability to run for years on standard coin-cell batteries  </li>
+<li>Low cost  </li>
+<li>Multi-vendor interoperability  </li>
+<li>Enhanced range  </li>
+</ul>
+<p>There are two reasons why you should be excited by this.<br />
+First, this low energy mode means you can use Bluetooth in a range of new applications like home automation, wearable electronics, or anything that needs to log data for long periods of time.<br />
+Second, Apple has opened up their Bluetooth API so anyone can create a Bluetooth accessory for iOS 5 and later.</p>
+<p>Why did they do this? One reason might be they don't have to worry about developers draining a user’s battery with a poorly made accessory with the new standard. I can't think of any reason to use a different wireless standard for these reasons.</p>
+<p>This brings me to my breakout board.<br />
+This breakout board is the reference schematic for the Nordic nRF8001 done in Eagle (originally done in Altium by Nordic). It is a simple wireless transceiver with an SPI interface and only a few passive components.</p>
+<h3>Why this IC?</h3>
+<p>A quick search on major electronic distributor websites shows there are a few manufacturers of Bluetooth 4 chips:</p>
+<ul>
+<li>Blue Giga — ~$20–$40  </li>
+<li>Cambridge Silicon Radio — ~$3  </li>
+<li>Nordic Semiconductor — ~$4  </li>
+<li>TI — ~$5  </li>
+<li>Panasonic — ~$15  </li>
+<li>RFM (same one iPhone uses) — ~$40  </li>
+</ul>
+<p>Parts from Panasonic, Blue Giga, and RFM provide ready-to-go modules, which explains their high price. RFM actually includes Wi-Fi!<br />
+Only TI, CSR, and Nordic provide ICs. However:</p>
+<ul>
+<li>TI is larger and more expensive, offering a complete SoC with an integrated 8051 processor.  </li>
+<li>CSR makes you sign an NDA to get the datasheet.  </li>
+</ul>
+<p>So I chose Nordic because of the IC’s small footprint, open specs, affordability, and simplicity.<br />
+Sourcing the parts from Mouser.com, it looks like a populated board should cost ~$12.<br />
+Take a look at my <a href="https://github.com/nabilt/nRF8001-Breakout-Board/tree/master/bom">BOM</a>.</p>
+<p>One thing you should keep in mind: none of these chips are backward compatible with older Bluetooth standards — but that shouldn’t be a problem by the end of 2012.</p>
+<p>I plan to send out the board and order the parts this week. Hopefully I can also start working on firmware and a few demo smartphone apps.<br />
+Until then, check out the source on <a href="https://github.com/nabilt/nRF8001-Breakout-Board/tree/master/bom">GitHub</a>.</p>
+<p>Credit to <a href="http://www.mkroll.mobi/?page_id=386">Dr. Michael Kroll</a> for the information about Bluetooth 4 and Mi-Fi.<br />
+Check out his Arduino Shield.</p>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

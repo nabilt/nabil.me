@@ -1,0 +1,62 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Contact</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<h1>Contact</h1>
+<p>
+  Want to get in touch? You can find me here:
+</p>
+<ul>
+  <li>GitHub: <a href="https://github.com/nabilt" target="_blank">nabilt</a></li>
+  <li>Email: <span id="stuff"></span></li>
+</ul>
+
+<script>
+  const chars = [110,97,98,105,108,46,116,101,119,111,108,100,101,64,103,109,97,105,108,46,99,111,109];
+  const decoded = chars.map(c => String.fromCharCode(c)).join('');
+  const link = `<a href="mailto:${decoded}">${decoded}</a>`;
+  document.getElementById("stuff").innerHTML = link;
+</script>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

@@ -1,0 +1,148 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Home Energy Prototypes</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>Home Energy Prototypes</h2>
+  <p>
+    <small>November 15, 2011</small>
+      
+        <a href="/blog/tag/electronics/"
+           class="tag-badge tag-neutral">
+          #electronics
+        </a>
+      
+        <a href="/blog/tag/software/"
+           class="tag-badge tag-neutral">
+          #software
+        </a>
+      
+  </p>
+  <div>
+    <p>In this post, I’ll walk through a few of my early home automation and energy monitoring projects. These were all functional prototypes designed to track power usage, automate HVAC systems, and give me better visibility into what's happening around the house. Most of them use simple microcontrollers, wireless modules, and a DIY web interface to bring it all together.</p>
+<h3>Wireless Temperature Sensor</h3>
+<p><img alt="Wireless temperature sensor with attiny45" src="https://storage.googleapis.com/nabil_me_bucket/img/b36b0-v2copy.jpg" /></p>
+<p>This wireless temperature sensor includes Sparkfun's basic 315MHz <a href="http://www.sparkfun.com/products/8945">wireless transmitter</a>, an ATtiny45, <a href="http://www.sparkfun.com/products/9438">LM335A</a> temperature sensor, and a 12mm battery holder.</p>
+<p>It lasted a few weeks by disabling the brownout detector, enabling internal pull-ups on unused I/O, and disabling all peripherals. It periodically wakes up and transmits temperature data to a hub with an ATtiny328.</p>
+<h3>Smart Meter Reader</h3>
+<p><img alt="Wireless Smart Meter reader with IR LED" src="https://storage.googleapis.com/nabil_me_bucket/img/ebc54-v3copy.jpg" /></p>
+<p>Using an <a href="http://www.sparkfun.com/products/241">IR detector</a>, I was able to read IR pulses from the smart meter and measure power usage with 1Wh resolution. I built an enclosure to block sunlight.</p>
+<p>Newer meters use encrypted Zigbee mesh networks, which are still worth investigating — I plan to test with the <a href="http://www.logos-electro.com/zigduino/">Zigduino</a>.</p>
+<p>By switching appliances on/off and subtracting before/after readings, you can get per-device usage. This is more accurate than current clamps, especially for inductive loads.</p>
+<p>Example readings from my house:</p>
+<p>Fridge                    - 180W<br />
+HDTV + cable box         - 130W<br />
+Hot water heater         - 70W<br />
+Hallway spot lights full - 220W<br />
+Dryer                    - 5840W<br />
+Large stove high         - 3000W<br />
+Toaster oven             - 1000W<br />
+Notebook charger         - 65W  </p>
+<h3>Wireless Power Bar</h3>
+<p><img alt="220VAC @ 20A relay and current clamp" src="https://storage.googleapis.com/nabil_me_bucket/img/ba2ac-v5copy.jpg" /></p>
+<p>This breadboard-stage project includes an ATmega168, Hope <a href="http://www.sparkfun.com/products/9582">RFM12B</a> wireless module, <a href="http://www.seeedstudio.com/depot/noninvasive-ac-current-sensor-100a-max-p-547.html">current clamp</a>, and a 220VAC <a href="http://www.sparkfun.com/products/10924">relay</a>. It's hooked up to a power bar.</p>
+<p>The web UI displays real-time usage and allows toggling the relay.</p>
+<h3>Wireless Thermostat</h3>
+<p><img alt="Wireless Thermostat with ATmega328" src="https://storage.googleapis.com/nabil_me_bucket/img/e3d87-v4copy.jpg" /></p>
+<p>This thermostat controls the HVAC: heating, AC, and fan. It uses an ATmega328, RF module, and a <a href="http://www.seeedstudio.com/depot/grove-temphumi-sensor-p-745.html">digital temp/humidity sensor</a>.</p>
+<p>It runs a simple PID loop to regulate the house temp. In the future, I want to add safeguards to protect the HVAC from overshoot damage. Nest-style testing chamber would help.</p>
+<p><img alt="Nest’s thermostat test chamber (via Wired)" src="https://storage.googleapis.com/nabil_me_bucket/img/38dbc-thermostat-2.jpg" /></p>
+<h3>Wireless Hub + Garage Opener</h3>
+<p>No images, but the hub has an ATmega328, RF module, and USB-serial chip to bridge physical devices and the web.<br />
+The garage door unit uses a reed switch and IR beam to detect the door position and car presence.</p>
+<hr />
+<h2>Web Interface — Version 1</h2>
+<p><img alt="Web UI V1: Google look &amp; feel" src="https://storage.googleapis.com/nabil_me_bucket/img/98623-v1webcopy.png" /></p>
+<p>This version was built using <a href="http://code.google.com/webtoolkit/">Google Web Toolkit (GWT)</a> after attending Google IO. GWT is great for building dynamic apps without much JavaScript.</p>
+<p>However, issues arise with 3rd-party JS integrations (like plotting libs), and you often end up locked into Google’s ecosystem.</p>
+<p>The stock chart is from <a href="http://www.google.com/finance?q=google">Google Finance</a>, but struggles with real-time updates and large datasets. Ideally, you’d reduce resolution dynamically while zooming.</p>
+<h3>Features:</h3>
+<ul>
+<li>Electricity bill calculation based on TOU pricing  </li>
+<li>Real-time cost per hour  </li>
+<li>Historical power &amp; temp graphs  </li>
+<li>Thermostat controls  </li>
+<li>Power bar state &amp; usage  </li>
+<li>Garage controls  </li>
+<li>Parking status</li>
+</ul>
+<hr />
+<h2>Version 2 — Improved Granularity</h2>
+<h3>Current Meter</h3>
+<p>Built a new board with a Hope RF module, ATmega168, and six 3.5mm jacks (analog inputs).<br />
+Used both 15A and 100A clamps depending on the appliance.</p>
+<p><img alt="Power meter in a Sparkfun box" src="https://storage.googleapis.com/nabil_me_bucket/img/47969-e2copy.jpg" />  </p>
+<p><img alt="Wireless power meter with 6 current clamps" src="https://storage.googleapis.com/nabil_me_bucket/img/bfdb2-e1copy.jpg" /></p>
+<h3>Breaker Panel Install</h3>
+<p><img alt="Current clamps installed in breaker panel" src="https://storage.googleapis.com/nabil_me_bucket/img/2c9f2-panel1copy.jpg" /></p>
+<p>Attached clamps to major circuits: stove, dryer, ground/top floor, fridge, and AC.</p>
+<p>Installation was simple:<br />
+- Turn off mains<br />
+- Remove panel<br />
+- Clip clamp to wire<br />
+- Route wires through existing holes<br />
+- Reinstall panel and turn on mains</p>
+<hr />
+<h2>Web Interface — Version 2</h2>
+<p>Moved to <a href="http://www.pylonsproject.org/">Pyramid</a>, <a href="http://pyserial.sourceforge.net/">PySerial</a>, <a href="http://socket.io/">SocketIO</a>, and <a href="http://www.gevent.org/">Gevent</a>.<br />
+Server events like door openings now push updates to the browser without polling.</p>
+<p>I used <a href="http://code.google.com/p/flot/">Flot</a> for plotting — added zoom controls and server-side data thinning for large datasets.</p>
+<p><img alt="Web Interface V2: breaker panel power history" src="https://storage.googleapis.com/nabil_me_bucket/img/507f7-v2web1copy.png" />  </p>
+<p><img alt="Web Interface V2: real-time power plots" src="https://storage.googleapis.com/nabil_me_bucket/img/07ddd-v2web3copy.png" />  </p>
+<p><img alt="Web Interface V2: temperature/humidity (note: some spikes = bad data)" src="https://storage.googleapis.com/nabil_me_bucket/img/aa711-v2web2copy.png" /></p>
+<hr />
+<h2>Future Plans</h2>
+<p>Things I’d like to improve:</p>
+<ul>
+<li>Replace RF modules with <a href="http://www.atmel.com/dyn/products/product_card.asp?part_id=4692&amp;category_id=163&amp;family_id=676&amp;subfamily_id=2124">ATmega128RFA1</a> for built-in Zigbee  </li>
+<li>Add user accounts and clean up JS  </li>
+<li>Build a Linux-based hub using <a href="http://www.freescale.com/webapp/sps/site/prod_summary.jsp?code=i.MX233">i.MX233</a>  </li>
+<li>Revise electronics and fix bugs</li>
+</ul>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

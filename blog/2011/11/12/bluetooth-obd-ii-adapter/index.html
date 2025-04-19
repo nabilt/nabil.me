@@ -1,0 +1,82 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Bluetooth OBD-II Adapter</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>Bluetooth OBD-II Adapter</h2>
+  <p>
+    <small>November 12, 2011</small>
+      
+        <a href="/blog/tag/electronics/"
+           class="tag-badge tag-neutral">
+          #electronics
+        </a>
+      
+  </p>
+  <div>
+    <p><img alt="OBD Board" src="https://storage.googleapis.com/nabil_me_bucket/img/2c895-obd.png" /></p>
+<p><strong>Update:</strong> <a href="https://github.com/nabilt/Bluetooth-ODB-2-Adapter">Here is the GitHub repo</a></p>
+<p>A couple of weeks ago, my dad and I were troubleshooting the cause of a check engine light on our 2000 Toyota Camry. Using an off-the-shelf OBD-II reader, we got a warning about the <a href="http://en.wikipedia.org/wiki/Egr">EGR system</a>. After trying every test in the book, we came up empty and had to take it to Toyota. They found a sticky relay that was beginning to fail — a tricky issue to catch since the light only came on after ~30 km of driving. If we had a way to monitor signals in real time, this problem might have been easier to solve.</p>
+<p>That’s why I created my OBD-II board.</p>
+<p>The board is essentially the reference schematic for the <a href="http://www.scantool.net/scantool/news/2010/oct/29/STN1110/">STN1110</a>, which converts various OBD-II physical layers into RS232. The bottom of the board includes a Bluetooth module from <a href="http://www.dealextreme.com/p/wireless-bluetooth-rs232-ttl-transceiver-module-80711#forum">DealExtreme</a>. The goal is to connect it to a smartphone or tablet to log data wirelessly.</p>
+<p>Similar products exist, but I couldn’t find any affordable ones that use the STN1110. <a href="http://www.scantool.net/scan-tools/modules/microobd-200.html">Scantool</a> offers a 3.3cm × 1.5cm module for $70 — a bit pricey for a $10 chip.</p>
+<p><img alt="Scantool’s module" src="https://storage.googleapis.com/nabil_me_bucket/img/5ebca-microobd200_red_3qtr_small_20100920_1031.png" /><br />
+<em>Scantool's module</em></p>
+<p>The STN1110 is supposedly faster than the Elm327, making it great for real-time data logging. It supports the following protocols:</p>
+<ul>
+<li>SAE J1850 PWM  </li>
+<li>SAE J1850 VPW  </li>
+<li>SAE J1939  </li>
+<li>ISO 9141-2  </li>
+<li>ISO 14230-4 (KWP 2000)  </li>
+<li>ISO 15765-4 (CAN)  </li>
+<li>ISO 11898 (raw CAN)</li>
+</ul>
+<p>My board is 5cm × 5cm, which means it can be manufactured through <a href="http://www.seeedstudio.co/">Seeed Studio</a> for just $10. I’ll post the schematics on GitHub in the next couple of days.</p>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

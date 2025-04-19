@@ -1,0 +1,175 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Using the STM32F4 DISCOVERY Board in OSX Lion</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>Using the STM32F4 DISCOVERY Board in OSX Lion</h2>
+  <p>
+    <small>October 30, 2011</small>
+      
+        <a href="/blog/tag/electronics/"
+           class="tag-badge tag-neutral">
+          #electronics
+        </a>
+      
+  </p>
+  <div>
+    <p><img alt="STM32" src="https://storage.googleapis.com/nabil_me_bucket/img/7b6f3-stm32f4_discovery.jpg" /></p>
+<p><strong>Update</strong>: Check out the new <a href="https://nabil.me/2011/11/01/programming-the-stm32f4-discovery-with-the-bus-blaster/">post</a> on programming with JTAG</p>
+<p>I recently got the <a href="http://www.st.com/internet/evalboard/product/252419.jsp">STM32F4DISCOVERY</a> board, which features ARM's new CortexM4 with 1 MB Flash and 192 KB RAM. For the past couple of years I've been using AVRs because you can get open source compilers, libraries and programmers unlike their <a href="http://dangerousprototypes.com/2011/08/30/editorial-our-friend-microchip-and-open-source/">competitors</a>. The only thing I miss from the ARM world is processor speed. Most of Atmel's low end chips are less than 100MHz and can cost as much as a 150MHz ARM cpu with similar peripherals. This is one of the reasons why I am switching to ARM for the next prototype of the bicycle computer. Maybe I'll stay in the family and use Atmel's new <a href="http://www.atmel.com/dyn/products/devices.asp?category_id=163&amp;family_id=605&amp;subfamily_id=2404&amp;source=left_nav&amp;source=SAM_Cortex_microsite">CortexM4</a> when it comes out.</p>
+<p>To use the STM32F4 Discovery in OSX we are going to need a cross compiler. There is a great thread on <a href="http://dangerousprototypes.com/2011/09/23/stm32-f4-series-of-high-performance-mcus-with-dsp-and-fpu-instructions/">dangerousprototypes</a> with lots of info, which I will summarize here. Then I'll show the alternative setup.</p>
+<h2>Option 1: The easy way?</h2>
+<p>Rious has <a href="http://cu.rious.org/make/stm32-toolchain-on-mac-os-x/">instructions</a> on setting up the cross compiler on OSX and Linux using a build script from <a href="https://github.com/esden/summon-arm-toolchain">github</a>. However, I was not able to get this working in Lion and I'm not sure if it is taking advantage of the FPU instruction set so I decided to build one from scratch.</p>
+<h2>Option 2: The "fun" way</h2>
+<p>Here is what you need. Get the latest version of each:</p>
+<ul>
+<li><a href="http://www.macports.org/install.php">MacPorts</a>: Package manager for OSX. We will need this to compile things like libusb.</li>
+<li><a href="http://ftp.gnu.org/gnu/binutils/">Binutils</a>: Binary utilities like a linker and assembler</li>
+<li><a href="http://sourceware.org/newlib/">Newlib</a>: Standard C library for embedded systems</li>
+<li><a href="http://gcc.gnu.org/">GCC</a>: C Compiler source</li>
+<li><a href="http://www.gnu.org/s/gdb/">GDB</a>: C debugger</li>
+<li><a href="http://developer.apple.com/xcode/">XCode</a>: Compiler to compile arm-gcc</li>
+</ul>
+<p><strong>I'm using:</strong></p>
+<ul>
+<li>MacPorts 2.0.3  </li>
+<li>binutils-2.21.1  </li>
+<li>newlib-1.19.0  </li>
+<li>gcc-4.6.1  </li>
+<li>gdb-7.3.1  </li>
+<li>Xcode: 4.1</li>
+</ul>
+<h3>First we need to install the gcc dependencies using MacPorts</h3>
+<pre class="codehilite"><code class="language-bash">sudo port install gmp mpfr libmpc
+</code></pre>
+
+<h3>Next we will build binutils</h3>
+<pre class="codehilite"><code class="language-bash">cd [binutils-build]
+CC=/usr/bin/gcc-4.2 CPP=/usr/bin/cpp-4.2 CXX=/usr/bin/g++-4.2 LD=/usr/bin/ld ./configure \
+  --target=arm-none-eabi --prefix=/opt/local/ --enable-interwork --enable-multilib \
+  --disable-nls --disable-libssp
+make all
+sudo make install
+</code></pre>
+
+<p>Some definitions:</p>
+<ul>
+<li><code>--prefix=/opt/local/</code>: Set the install directory. I'm putting it with my MacPorts install.  </li>
+<li><code>--enable-interwork</code>: Allows ARM and Thumb code to be used  </li>
+<li><code>--enable-multilib</code>: Build multiple versions of some libs (e.g. soft float vs. hard float)  </li>
+<li><code>--disable-nls</code>: Tells gcc to only support American English output messages  </li>
+<li><code>--disable-libssp</code>: Don't include stack smashing protection  </li>
+</ul>
+<h3>GCC is next</h3>
+<p><strong>Update:</strong> added patch info. Thanks to Msmith+disqus from the comments in the bus blaster post.</p>
+<p>First let's apply a patch to gcc to add hardware floating point.<br />
+Download the patch from <a href="https://github.com/MikeSmith/summon-arm-toolchain/blob/master/patches/patch-gcc-config-arm-t-arm-elf.diff">here</a>.</p>
+<pre class="codehilite"><code class="language-bash">cd [gcc-build]
+patch gcc/config/arm/t-arm-elf patch-gcc-config-arm-t-arm-elf.diff
+</code></pre>
+
+<p><strong>Make sure to set the path of <code>--with-headers</code>.</strong><br />
+We are bootstrapping gcc by running <code>make all-gcc</code>. We'll have to run <code>make all</code> later.</p>
+<pre class="codehilite"><code class="language-bash">cd [gcc-build]
+mkdir objdir
+cd objdir
+CC=/usr/bin/gcc-4.2 CPP=/usr/bin/cpp-4.2 CXX=/usr/bin/g++-4.2 LD=/usr/bin/ld ../configure \
+  --target=arm-none-eabi --prefix=/opt/local/ --enable-interwork --enable-multilib \
+  --enable-languages=&quot;c&quot; --with-newlib \
+  --with-headers=[newlibdir]/newlib-1.19.0/newlib/libc/include/ \
+  --disable-libssp --with-gmp=/opt/local/ --with-mpfr=/opt/local/ \
+  --with-mpc=/opt/local/ --with-libiconv-prefix=/opt/local/ --disable-nls
+make all-gcc
+sudo make install-gcc
+</code></pre>
+
+<h3>Verify hardware float support</h3>
+<pre class="codehilite"><code class="language-bash">arm-none-eabi-gcc -print-multi-lib
+</code></pre>
+
+<p>You should see:</p>
+<pre class="codehilite"><code>.;
+thumb/arm7tdmi-s;@mthumb@mcpu=arm7tdmi-s
+thumb/cortex-m3;@mthumb@mcpu=cortex-m3
+thumb/cortex-m4;@mthumb@mcpu=cortex-m4
+thumb/cortex-m4/float-abi-hard/fpuv4-sp-d16;@mthumb@mcpu=cortex-m4@mfloat-abi=hard@mfpu=fpv4-sp-d16
+</code></pre>
+
+<h3>Build Newlib</h3>
+<pre class="codehilite"><code class="language-bash">cd [newlib-build]
+CC=/usr/bin/gcc-4.2 CPP=/usr/bin/cpp-4.2 CXX=/usr/bin/g++-4.2 LD=/usr/bin/ld ./configure \
+  --target=arm-none-eabi --prefix=/opt/local/ --enable-interwork \
+  --enable-multilib --disable-libssp --disable-nls
+make all
+sudo make install
+</code></pre>
+
+<h3>Finish building GCC</h3>
+<pre class="codehilite"><code class="language-bash">cd [gcc-build]/objdir
+make all
+sudo make install
+</code></pre>
+
+<h3>Build the debugger</h3>
+<pre class="codehilite"><code class="language-bash">cd [gdb-build]
+CC=/usr/bin/gcc-4.2 CPP=/usr/bin/cpp-4.2 CXX=/usr/bin/g++-4.2 LD=/usr/bin/ld ./configure \
+  --target=arm-none-eabi --prefix=/opt/local/ --enable-interwork \
+  --enable-multilib --disable-libssp --disable-nls
+make all
+sudo make install
+</code></pre>
+
+<h2>Setting up ST-LINK</h2>
+<p>ST-LINK lets you debug and program the dev board from a Windows box. To get it working in OSX and Linux we will need the help of open source software.</p>
+<p>Rious has <a href="http://cu.rious.org/make/getting-stlink-to-work-on-mac-os-x-with-macports/">instructions</a>.<br />
+For documentation see the <a href="https://github.com/texane/stlink/blob/master/doc/tutorial/tutorial.pdf?raw=true">PDF</a> in <a href="https://github.com/texane/stlink">GitHub</a>.<br />
+It currently only supports writing to RAM and not Flash for CortexM4 devices.<br />
+See <a href="https://github.com/texane/stlink/issues/12">this bug report</a> for more details.</p>
+<p>In the next post I'll upload the modified <a href="http://www.st.com/internet/com/SOFTWARE_RESOURCES/SW_COMPONENT/FIRMWARE/stm32f4discovery_fw.zip">example source</a> files from ST.</p>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

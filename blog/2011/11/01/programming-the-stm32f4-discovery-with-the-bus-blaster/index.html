@@ -1,0 +1,138 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Programming the STM32F4 DISCOVERY with the Bus Blaster</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>Programming the STM32F4 DISCOVERY with the Bus Blaster</h2>
+  <p>
+    <small>November 1, 2011</small>
+      
+        <a href="/blog/tag/electronics/"
+           class="tag-badge tag-neutral">
+          #electronics
+        </a>
+      
+  </p>
+  <div>
+    <p><img alt="STM32 and bus blaster" src="https://storage.googleapis.com/nabil_me_bucket/img/454a9-stm32f4_bus_blaster.jpg" />  </p>
+<p>In my <a href="https://nabil.me/2011/10/30/using-the-stm32f4-discovery-board-in-osx-lion/">last post</a> I covered setting up a toolchain on macOS. In this post, I’ll show how to program and debug the STM32F4 Discovery board using open source tools and hardware.</p>
+<p>The Discovery board supports ARM's two-wire SWD and six-wire JTAG debug ports. While ST provides <a href="http://www.st.com/internet/evalboard/product/251168.jsp">official programmers</a>, they lack Linux support. Fortunately, their dev boards include an ST-LINK USB-to-JTAG translator, which now has Linux support thanks to <a href="https://github.com/texane/stlink">texane</a> on GitHub. There's also a <a href="https://github.com/jnosky/stlink">fork</a> adding STM32F4 support, though it's still a bit unstable. So, let’s look at an altern...</p>
+<h2>Bus Blaster and OpenOCD</h2>
+<p><strong>⚠️ Warning:</strong> OpenOCD doesn’t fully support Cortex-M4 yet. This method could damage your hardware. Use at your own risk.</p>
+<p>The <a href="http://dangerousprototypes.com/docs/Bus_Blaster">Bus Blaster</a> is an open hardware JTAG debugger available from <a href="http://www.seeedstudio.com/depot/bus-blaster-v2-jtag-debugger-p-807.html?cPath=174">SeeedStudio</a> for about $35. Any debugger compatible with OpenOCD should work with these instructions.</p>
+<p>Download OpenOCD 0.5.0 from <a href="http://sourceforge.net/projects/openocd/">SourceForge</a>, extract it, and run:</p>
+<pre class="codehilite"><code class="language-bash">cd [OpenOCD]
+CC=/usr/bin/gcc-4.2 CPP=/usr/bin/cpp-4.2 CXX=/usr/bin/g++-4.2 LD=/usr/bin/ld ./configure --prefix=/opt/local/ --enable-ft2232_libftdi
+make
+sudo make install
+</code></pre>
+
+<h2>Download the STM32F4 Demo</h2>
+<p><strong>Update:</strong> You’ll need to update <code>LDFLAGS</code>, <code>CC</code>, <code>LD</code>, etc. in the Makefile to match your system.</p>
+<pre class="codehilite"><code class="language-bash">git clone https://github.com/nabilt/STM32F4-Discovery-Firmware.git
+cd STM32F4-Discovery_FW_V1.0.1/Project/IO_Toggle
+make
+</code></pre>
+
+<p><img alt="JTAG pinout Discovery board" src="https://storage.googleapis.com/nabil_me_bucket/img/bcee9-swd_port1.png" /><br />
+<em>JTAG pinout Discovery board</em></p>
+<p>Connect all six JTAG pins from the Bus Blaster to the Discovery board. TDI is located at pin PA15 on header P2.<br />
+<strong>Important:</strong> Power the Discovery via the mini USB, but not from the computer — it may interfere with the JTAG pins.</p>
+<p>Unload FTDI drivers that could interfere with OpenOCD:</p>
+<pre class="codehilite"><code class="language-bash">sudo kextunload /System/Library/Extensions/FTDIUSBSerialDriver.kext/
+</code></pre>
+
+<p>Then run OpenOCD:</p>
+<pre class="codehilite"><code class="language-bash">cd STM32F4-Discovery_FW_V1.0.1/openocd_config
+openocd -f openocd.cfg -f stm32f4x.cfg
+</code></pre>
+
+<p>Expected output:</p>
+<pre class="codehilite"><code class="language-bash">Open On-Chip Debugger 0.5.0 (2011-10-30-17:32)
+...
+Info : JTAG tap: stm32f4xxx.cpu tap/device found: ...
+Info : stm32f4xxx.cpu: hardware has 6 breakpoints, 4 watchpoints
+</code></pre>
+
+<p>One TAP is for the CPU, the other for the FPU.</p>
+<hr />
+<h2>Programming and Debugging with GDB</h2>
+<p>In a second terminal:</p>
+<pre class="codehilite"><code class="language-bash">arm-none-eabi-gdb
+(gdb) target extended localhost:3333
+(gdb) monitor halt
+(gdb) file demo.elf
+(gdb) load demo.elf
+(gdb) continue
+(gdb) br main.c:71
+(gdb) info registers
+</code></pre>
+
+<hr />
+<h2>Writing to Flash</h2>
+<p>So far we’ve only uploaded the code to SRAM. To flash the chip permanently:</p>
+<pre class="codehilite"><code class="language-bash">arm-none-eabi-gdb
+(gdb) target extended localhost:3333
+(gdb) monitor halt
+(gdb) file demo.elf
+(gdb) monitor flash write_image erase demo.hex 0 ihex
+(gdb) continue
+</code></pre>
+
+<blockquote>
+<p>This works with <a href="https://github.com/nabilt/STM32F4-Discovery-Firmware/raw/master/Project/Demonstration/Binary/STM32F4-Discovery_Demonstration_V1.0.0.hex">ST’s demo hex file</a>, but may fail with custom builds due to linker issues.</p>
+</blockquote>
+<p>Currently, it gets stuck in <code>HardFault_Handler()</code> at <code>stm32f4xx_it.c:61</code>. Let me know if you have ideas in the comments.</p>
+<hr />
+<h2>What Needs Work</h2>
+<ol>
+<li>Fix the flash writing issue  </li>
+<li>Add full STM32F4 support to OpenOCD</li>
+</ol>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

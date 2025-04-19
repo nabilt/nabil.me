@@ -1,0 +1,87 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>Bike Computer V0.1 Build</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>Bike Computer V0.1 Build</h2>
+  <p>
+    <small>November 2, 2011</small>
+      
+        <a href="/blog/tag/electronics/"
+           class="tag-badge tag-neutral">
+          #electronics
+        </a>
+      
+  </p>
+  <div>
+    <p><img alt="Back: Screen" src="https://storage.googleapis.com/nabil_me_bucket/img/df049-bike_computer_back.jpg" /> </p>
+<p>I’ve built the first prototype of my bike computer and have been developing the firmware for a couple of weeks now. Everything except the temperature sensor, accelerometer, servo headers, and Li-ion fuel gauge has been populated.</p>
+<p>There were a few minor electrical bugs, like forgetting resistors for the ISP programmer, but nothing too difficult to fix for the next prototype. The bigger issues have appeared on the software side. First, I’ve filled all 32K of the ATmega’s memory — mostly due to lengthy sensor configurations, USB libraries, and FATFS. Second, RAM is tight when processing things like NMEA strings or rendering complex graphics.</p>
+<p>I’ve realized there’s little point in having a vibrant TFT LCD screen if the 16MHz ATmega can’t keep up with decent refresh rates. So, I’ll probably switch to an ARM processor for the next version — likely something from the <a href="http://www.nabiltewolde.com/2011/10/using-stm32f4-discovery-board-in-osx.html">STM32F4 series</a>.</p>
+<h3>Features</h3>
+<p><img alt="Back: Electronics" src="https://storage.googleapis.com/nabil_me_bucket/img/22142-bike_computer_front.jpg" /></p>
+<ul>
+<li>ATmega32U4  </li>
+<li>2 servo outputs to control an electronic derailleur  </li>
+<li>3-axis accelerometer — MMA7260Q  </li>
+<li>GPS — Linx RXM-GPS-SG  </li>
+<li>Altimeter — BMP085  </li>
+<li>Micro SD card  </li>
+<li>LiPo charger — MCP73871  </li>
+<li>Fuel gauge — MAX1704X  </li>
+<li>2.4" x 2.0" board  </li>
+<li>Electronic derailleur controller (<a href="http://nabil.me/2012/06/06/diy-electronic-derailleur-on-instructable/">see details</a>)</li>
+</ul>
+<h3>Planned Improvements</h3>
+<ul>
+<li>Heart rate monitor &amp; pulse oximeter  </li>
+<li>LCD touch screen  </li>
+<li>More accurate energy output measurement (maybe calibrate per user instead of curve fitting)</li>
+</ul>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+

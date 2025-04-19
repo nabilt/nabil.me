@@ -1,0 +1,92 @@
+ 
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head >
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-XM4TMY3C90"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', 'G-XM4TMY3C90');
+  </script>
+
+  <title>DIY Reflow Oven w/ Exhaust Build - Part 2</title>
+
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="dark">
+
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/pico.min.css"/>
+  <link rel="stylesheet" href="https://storage.googleapis.com/nabil_me_bucket/css/style.css">
+</head>
+<body>
+<main class="container narrow">
+  <header>
+    <h1><a href="/">nabil.me</a></h1>
+    <nav>
+      <ul>
+        <li><a href="/blog/">Blog</a></li>
+        <li><a href="/about/">About</a></li>
+        <li><a href="/contact/">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+
+  
+<article>
+  <h2>DIY Reflow Oven w/ Exhaust Build - Part 2</h2>
+  <p>
+    <small>August 24, 2023</small>
+      
+        <a href="/blog/tag/tools/"
+           class="tag-badge tag-neutral">
+          #tools
+        </a>
+      
+  </p>
+  <div>
+    <p><img alt="pxl_20230823_214321497" src="https://storage.googleapis.com/nabil_me_bucket/img/pxl_20230823_214321497.jpg" /></p>
+<p><em>The design for version 2 of this project required the PCB to double as a panel replacement for the toaster oven, so board quality was an important consideration. Luckily, the folks at <a href="https://www.pcbway.com/">PCBWay</a> kindly offered to sponsor the manufacturing. The end result was a perfect white silkscreen and accurate cut-out dimensions, which is why they have been my PCB vendor of choice even before this partnership. They have also streamlined the process by providing a <a href="https://github.com/pcbway/PCBWay-Plug-in-for-Kicad">KiCad plugin</a> that automatically packages your board design, opens a browser, and adds it to your shopping cart. Combine this with their responsive support engineers and real-time production status on their website, and you are basically guaranteed a fast turnaround with no errors.</em></p>
+<p><img alt="pxl_20230824_001048336" src="https://storage.googleapis.com/nabil_me_bucket/img/pxl_20230824_001048336.jpg" /><br />
+<img alt="screenshot-from-2023-08-23-20-29-12" src="https://storage.googleapis.com/nabil_me_bucket/img/screenshot-from-2023-08-23-20-29-12.png" /><br />
+<img alt="screenshot-from-2023-08-23-20-44-18" src="https://storage.googleapis.com/nabil_me_bucket/img/screenshot-from-2023-08-23-20-44-18.png" /></p>
+<p>The previous build used a Raspberry Pi, because that's what I had at the time. Unfortunately, I needed it during the great Raspberry Pi chip shortage and that left my oven unusable. This time I decided to rebuild it with an ESP32S3 to try out the graphics library <a href="https://lvgl.io/">LVGL</a>. It's open source and has a free (with limitations) tool called <a href="https://squareline.io/">Square Line Studio</a> to build GUIs with. I decided to give NXP’s <a href="https://www.nxp.com/design/software/development-software/gui-guider:GUI-GUIDER">GUI Guider</a> a try instead, which has no limitations. It works like most GUI editors and generates code for all of your UI screens, events, animations, etc. It even converts your asset files into C structs. This greatly reduced the boilerplate code you need to write.</p>
+<p><img alt="screenshot-from-2023-08-23-20-57-33" src="https://storage.googleapis.com/nabil_me_bucket/img/screenshot-from-2023-08-23-20-57-33.png" /><br />
+<img alt="screenshot-from-2023-08-24-01-21-59" src="https://storage.googleapis.com/nabil_me_bucket/img/screenshot-from-2023-08-24-01-21-59.png" /></p>
+<p>Currently, only the Reflow and Heat screens are functional. Reflow runs a temperature-controlled heat profile to reflow solder boards. Heat allows manual control of the oven. Dehydrate will bake parts, 3D printer filament or anything else at low temperatures to remove moisture. Settings will let you set the WiFi credentials.</p>
+<p><img alt="pxl_20230816_190907041" src="https://storage.googleapis.com/nabil_me_bucket/img/pxl_20230816_190907041.jpg" /></p>
+<p>The board has the following specs:</p>
+<ul>
+<li>2.8 inch capacitive LCD from Adafruit</li>
+<li>ESP32S3</li>
+<li>Micro SD slot</li>
+<li>ULN2003A stepper motor driver</li>
+<li>Piezo buzzer</li>
+<li>LM35 temperature overheat sensor</li>
+<li>RGB LED</li>
+<li>Rotary encoder</li>
+<li>Low side Mosfet switch x2</li>
+</ul>
+<p><img alt="pxl_20230823_214848934" src="https://storage.googleapis.com/nabil_me_bucket/img/pxl_20230823_214848934.jpg" /></p>
+<p>Finally, I switched from a stepper to a servo to control the exhaust door. This makes it easier to know the exact position of the door after power on. Next up will be finishing the dehydrate functionality.</p>
+<figure class="video">
+  <div>
+    <a href="https://youtu.be/TcJ5LUIOOHo">https://youtu.be/TcJ5LUIOOHo</a>
+  </div>
+</figure>
+  </div>
+</article>
+
+<p><a href="/blog/">← Back to blog</a></p>
+
+
+  <footer>
+    <small>&copy; 2025</small>
+  </footer>
+</main>
+</body>
+</html>
+
